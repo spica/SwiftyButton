@@ -19,6 +19,15 @@ enum Utils {
         return buttonImage(color: color, shadowHeight: shadowHeight, shadowColor: shadowColor, cornerRadius: cornerRadius, frontImageOffset: 0)
     }
     
+    static func gradientButtonImage(
+        colors: [UIColor],
+        shadowHeight: CGFloat,
+        shadowColor: UIColor,
+        cornerRadius: CGFloat) -> UIImage {
+        
+        return gradientButtonImage(colors: colors, shadowHeight: shadowHeight, shadowColor: shadowColor, cornerRadius: cornerRadius, frontImageOffset: 0)
+    }
+    
     static func highlightedButtonImage(
         color: UIColor,
         shadowHeight: CGFloat,
@@ -27,6 +36,16 @@ enum Utils {
         buttonPressDepth: Double) -> UIImage {
         
         return buttonImage(color: color, shadowHeight: shadowHeight, shadowColor: shadowColor, cornerRadius: cornerRadius, frontImageOffset: shadowHeight * CGFloat(buttonPressDepth))
+    }
+    
+    static func gradientHighlightedButtonImage(
+        colors: [UIColor],
+        shadowHeight: CGFloat,
+        shadowColor: UIColor,
+        cornerRadius: CGFloat,
+        buttonPressDepth: Double) -> UIImage {
+        
+        return gradientButtonImage(colors: colors, shadowHeight: shadowHeight, shadowColor: shadowColor, cornerRadius: cornerRadius, frontImageOffset: shadowHeight * CGFloat(buttonPressDepth))
     }
     
     static func buttonImage(
@@ -63,6 +82,40 @@ enum Utils {
         return resizableImage ?? UIImage()
     }
     
+    static func gradientButtonImage(
+        colors: [UIColor],
+        shadowHeight: CGFloat,
+        shadowColor: UIColor,
+        cornerRadius: CGFloat,
+        frontImageOffset: CGFloat) -> UIImage {
+        
+        // Create foreground and background images
+        let width = max(1, cornerRadius * 2 + shadowHeight)
+        let height = max(1, cornerRadius * 2 + shadowHeight)
+        let size = CGSize(width: width, height: height)
+        
+        let frontImage = gradientImage(colors: colors, size: size, cornerRadius: cornerRadius)
+        var backImage: UIImage? = nil
+        if shadowHeight != 0 {
+            backImage = image(color: shadowColor, size: size, cornerRadius: cornerRadius)
+        }
+        
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height + shadowHeight)
+        
+        // Draw background image then foreground image
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+        backImage?.draw(at: CGPoint(x: 0, y: shadowHeight))
+        frontImage.draw(at: CGPoint(x: 0, y: frontImageOffset))
+        let nonResizableImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        // Create resizable image
+        let capInsets = UIEdgeInsets(top: cornerRadius + frontImageOffset, left: cornerRadius, bottom: cornerRadius + shadowHeight - frontImageOffset, right: cornerRadius)
+        let resizableImage = nonResizableImage?.resizableImage(withCapInsets: capInsets, resizingMode: .stretch)
+        
+        return resizableImage ?? UIImage()
+    }
+    
     static func image(color: UIColor, size: CGSize, cornerRadius: CGFloat) -> UIImage {
         
         let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
@@ -81,6 +134,42 @@ enum Utils {
             roundedRect: rect,
             cornerRadius: cornerRadius
         ).addClip()
+        nonRoundedImage?.draw(in: rect)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image ?? UIImage()
+    }
+    
+    static func gradientImage(colors: [UIColor], size: CGSize, cornerRadius: CGFloat) -> UIImage {
+        
+        let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
+        
+        // Create a non-rounded image
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        let context = UIGraphicsGetCurrentContext()
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let colorLocations: [CGFloat] = [0.0, 1.0]
+        let cgColors = colors.map { (color) -> CGColor in
+            return color.cgColor
+        }
+        let gradient = CGGradient(colorsSpace: colorSpace,
+                                  colors: cgColors as CFArray,
+                                  locations: colorLocations)!
+        
+        let startPoint = CGPoint.zero
+        let endPoint = CGPoint(x: 0, y: size.height)
+        context?.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: [])
+        let nonRoundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        // Clip it with a bezier path
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        UIBezierPath(
+            roundedRect: rect,
+            cornerRadius: cornerRadius
+            ).addClip()
         nonRoundedImage?.draw(in: rect)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
