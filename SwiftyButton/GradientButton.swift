@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class GraidientButton: UIButton {
+class GradientButton: UIButton {
     public enum Defaults {
         public static var colors = [
             UIColor(red: 255 / 255, green: 217 / 255, blue: 63 / 255, alpha: 1),

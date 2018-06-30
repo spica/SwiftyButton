@@ -12,7 +12,7 @@
 		C09D784E1DBD4E110014565F /* FlatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D784D1DBD4E110014565F /* FlatButton.swift */; };
 		C09D78501DBD54B50014565F /* PressableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D784F1DBD54B50014565F /* PressableButton.swift */; };
 		C0F04E0F1BFA83F700E9925E /* SwiftyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = C0F04E0E1BFA83F700E9925E /* SwiftyButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D27887F120E7851E00FF3381 /* GraidientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27887F020E7851E00FF3381 /* GraidientButton.swift */; };
+		D27887F120E7851E00FF3381 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27887F020E7851E00FF3381 /* GradientButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +24,7 @@
 		C0F04E0E1BFA83F700E9925E /* SwiftyButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyButton.h; sourceTree = "<group>"; };
 		C0F04E101BFA83F700E9925E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0F04E171BFA842B00E9925E /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		D27887F020E7851E00FF3381 /* GraidientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraidientButton.swift; sourceTree = "<group>"; };
+		D27887F020E7851E00FF3381 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +72,7 @@
 				C0F04E171BFA842B00E9925E /* Utils.swift */,
 				C0F04E0E1BFA83F700E9925E /* SwiftyButton.h */,
 				C0F04E101BFA83F700E9925E /* Info.plist */,
-				D27887F020E7851E00FF3381 /* GraidientButton.swift */,
+				D27887F020E7851E00FF3381 /* GradientButton.swift */,
 			);
 			path = SwiftyButton;
 			sourceTree = "<group>";
@@ -175,7 +175,7 @@
 			files = (
 				C09D78501DBD54B50014565F /* PressableButton.swift in Sources */,
 				C0372F2E1C0694F500E00B85 /* CustomPressableButton.swift in Sources */,
-				D27887F120E7851E00FF3381 /* GraidientButton.swift in Sources */,
+				D27887F120E7851E00FF3381 /* GradientButton.swift in Sources */,
 				C09D784E1DBD4E110014565F /* FlatButton.swift in Sources */,
 				C09D784B1DBD427A0014565F /* Utils.swift in Sources */,
 			);
